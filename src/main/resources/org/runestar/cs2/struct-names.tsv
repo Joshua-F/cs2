@@ -463,7 +463,7 @@
 3016	show_attack_style
 3017	display_buff_bar
 3018	tooltips_for_buffs
-3019	display_relics
+3019	display_fragments
 3020	home_teleport_cooldown
 3021	minigame_teleport_cooldown
 3022	teleport_block_duration
@@ -585,3 +585,17 @@
 3754	iron_group_quest_complete_broadcasts
 3755	iron_group_combat_achievement_broadcasts
 3756	chatbox_mode_set_automatically
+3757	show_number_of_options_in_mouseover_tooltips
+3758	highlight_agility_shortcuts_shortcut_requirements
+3759	desert_heat_damage
+3760	pk_skull_prevention
+3761	accept_trade_delay
+3762	ctrl_click_to_invert_run_mode
+3768	the_frozen_door
+3769	nex
+3771	leagues_iii_shattered_relics
+4133	forinthry_surge_buff
+4135	land_of_the_goblins
+4136	hopespears_will
+4148	cannon_ammo
+4149	highlight_entities_on_tap

@@ -106,7 +106,7 @@ private class Writer(
     private fun appendSeq(construct: Construct.Seq) {
         for (insn in construct.instructions) {
             nextLine()
-            appendInsn(insn)
+            appendInsn(construct, insn)
         }
         construct.next?.let { appendConstruct(it) }
     }
@@ -185,11 +185,12 @@ private class Writer(
         construct.next?.let { appendConstruct(it) }
     }
 
-    private fun appendInsn(insn: Instruction) {
+    private fun appendInsn(construct: Construct.Seq, insn: Instruction) {
         when (insn) {
             is Instruction.Assignment -> appendAssignment(insn)
             is Instruction.Return -> {
-                if (indents == 0 && f.returnTypes.isEmpty()) {
+                if (indents == 0 && construct.instructions.last() == insn && construct.next == null && f.returnTypes.isEmpty()) {
+                    // The compiler seems to always generate a default "return" instruction at the end of the script
                     endingLine = false
                     return
                 } else {

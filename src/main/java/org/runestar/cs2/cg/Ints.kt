@@ -19,6 +19,7 @@ import org.runestar.cs2.NPC_NAMES
 import org.runestar.cs2.OBJ_NAMES
 import org.runestar.cs2.PARAM_NAMES
 import org.runestar.cs2.PLATFORMTYPE_NAMES
+import org.runestar.cs2.PREF_NAMES
 import org.runestar.cs2.SEQ_NAMES
 import org.runestar.cs2.SETPOSH_NAMES
 import org.runestar.cs2.SETPOSV_NAMES
@@ -146,6 +147,7 @@ private val PROTOTYPES = HashMap<Prototype, Loader<String>>().apply {
     this[CLANTYPE] = cst(CLANTYPE.identifier, CLANTYPE_NAMES)
     this[CLANSLOT] = NULL.orElse(VALUE)
     this[MINIMENU_ENTRY_TYPE] = cst(MINIMENU_ENTRY_TYPE.identifier, MINIMENU_ENTRY_TYPE_NAMES)
+    this[PREF] = cst(PREF.identifier, PREF_NAMES)
 }
 
 fun intConstantToString(n: Int, prototype: Prototype): String {

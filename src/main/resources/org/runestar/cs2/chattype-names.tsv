@@ -15,6 +15,10 @@
 29	loc_examine
 30	friendnotification
 31	ignorenotification
+41	clanchat
+43	clanmessage
+44	clanguestchat
+46	clanguestmessage
 90	autotyper
 91	modautotyper
 99	console
@@ -25,3 +29,5 @@
 105	spam
 106	playerrelated
 107	10sectimeout
+109	clancreationinvitation
+110	chalreq_clanchat

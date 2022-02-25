@@ -5,14 +5,13 @@ import org.runestar.cs2.ir.Function
 import org.runestar.cs2.ir.FunctionSet
 import org.runestar.cs2.ir.Instruction
 import org.runestar.cs2.ir.Variable
-import org.runestar.cs2.ir.remove
 
 object RemoveDeadCode : Phase.Individual() {
 
     override fun transform(f: Function, fs: FunctionSet) {
         var insn: Instruction? = f.instructions.first
         while (insn != null) {
-            if (insn is Instruction.Return) {
+            if (canTransform(f, insn)) {
                 insn = f.instructions.next(insn)
                 while (insn != null && insn !is Instruction.Label) {
                     if (insn is Instruction.Assignment) {
@@ -30,5 +29,27 @@ object RemoveDeadCode : Phase.Individual() {
                 insn = f.instructions.next(insn)
             }
         }
+    }
+
+    private fun canTransform(f: Function, ret: Instruction): Boolean {
+        if (ret !is Instruction.Return) {
+            return false
+        }
+        val chain = f.instructions
+        if (chain.indexOf(ret) == 0) {
+            // A return instruction could never exist at index 0 unless it is a valid return.
+            return false
+        }
+        var insn = chain.next(ret)
+        while (insn != null && insn !is Instruction.Label) {
+            if (insn is Instruction.Assignment) {
+                val def = insn.definitions
+                if (def !is Element.Access || def.variable !is Variable.Stack || insn.expression !is Element.Constant) {
+                    return false
+                }
+            }
+            insn = f.instructions.next(insn)
+        }
+        return true
     }
 }
