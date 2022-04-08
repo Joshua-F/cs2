@@ -47,7 +47,7 @@ val TOPLEVELINTERFACE = Prototype(Type.TOPLEVELINTERFACE)
 val OVERLAYINTERFACE = Prototype(Type.OVERLAYINTERFACE)
 val TYPE = Prototype(Type.TYPE)
 val PARAM = Prototype(Type.PARAM)
-val NEWVAR = Prototype(Type.NEWVAR)
+val ENTITYOVERLAY = Prototype(Type.ENTITYOVERLAY)
 val NPC_UID = Prototype(Type.NPC_UID)
 val PLAYER_UID = Prototype(Type.PLAYER_UID)
 

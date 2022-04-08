@@ -23,7 +23,7 @@ enum class Type(desc: Char = 0.toChar()) {
     MAPELEMENT('µ'),
     MODEL('m'),
     NAMEDOBJ('O'),
-    NEWVAR('-'),
+    ENTITYOVERLAY('-'),
     NPC('n'),
     NPC_UID('u'),
     OBJ('o'),

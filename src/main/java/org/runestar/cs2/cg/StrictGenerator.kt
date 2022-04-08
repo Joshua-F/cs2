@@ -415,8 +415,8 @@ val CALC_INFIX_MAP = mapOf(
         ADD to "+",
         SUB to "-",
         MULTIPLY to "*",
-        DIV to "/",
-        MOD to "%",
+        DIVIDE to "/",
+        MODULO to "%",
         AND to "&",
         OR to "|"
 )
@@ -435,8 +435,8 @@ val BRANCH_INFIX_MAP = mapOf(
 val PRECEDENCE_MAP = mapOf(
         // Calc ops
         MULTIPLY to 1,
-        DIV to 1,
-        MOD to 1,
+        DIVIDE to 1,
+        MODULO to 1,
         ADD to 2,
         SUB to 2,
         // Branch ops
