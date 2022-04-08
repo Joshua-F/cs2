@@ -59,6 +59,7 @@ val PLATFORMTYPE_NAMES = readNames("platformtype-names.tsv")
 val CLANTYPE_NAMES = readNames("clantype-names.tsv")
 val MINIMENU_ENTRY_TYPE_NAMES = readNames("minimenu-entry-type-names.tsv")
 val PREF_NAMES = readNames("pref-names.tsv")
+val SETTING_NAMES = readNames("setting-names.tsv")
 
 // must be at the bottom since it relies on other type names
 val SCRIPT_NAMES = readLoader("script-names.tsv") { ScriptName(it) }
