@@ -1,5 +1,8 @@
 1	desktop
 2	android
 3	ios
-4	enhanced
-5	mac
+4	enhanced_windows
+5	enhanced_macos
+7	enhanced_android
+8	enhanced_ios
+10	enhanced_linux
