@@ -76,6 +76,7 @@ val SETTING_NAMES = readNames("setting-names.tsv")
 val VARP_NAMES = readNames("varp-names.tsv").orElse(readNames("varp-names-unconfirmed.tsv"))
 val VARC_NAMES = readNames("varc-names.tsv").orElse(readNames("varc-names-unconfirmed.tsv"))
 val VARBIT_NAMES = readNames("varbit-names.tsv").orElse(readNames("varbit-names-unconfirmed.tsv"))
+val ENUM_NAMES = readNames("enum-names.tsv").orElse(readNames("enum-names-unconfirmed.tsv"))
 
 // must be at the bottom since it relies on other type names
 val SCRIPT_NAMES = readLoader("script-names.tsv") { ScriptName(it) }
