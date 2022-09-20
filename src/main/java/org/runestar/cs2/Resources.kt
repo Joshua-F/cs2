@@ -73,6 +73,9 @@ val MINIMENU_ENTRY_TYPE_NAMES = readNames("minimenu-entry-type-names.tsv")
 val DEVICEOPTION_NAMES = readNames("deviceoption-names.tsv")
 val GAMEOPTION_NAMES = readNames("gameoption-names.tsv")
 val SETTING_NAMES = readNames("setting-names.tsv")
+val VARP_NAMES = readNames("varp-names.tsv").orElse(readNames("varp-names-unconfirmed.tsv"))
+val VARC_NAMES = readNames("varc-names.tsv").orElse(readNames("varc-names-unconfirmed.tsv"))
+val VARBIT_NAMES = readNames("varbit-names.tsv").orElse(readNames("varbit-names-unconfirmed.tsv"))
 
 // must be at the bottom since it relies on other type names
 val SCRIPT_NAMES = readLoader("script-names.tsv") { ScriptName(it) }
