@@ -22,7 +22,7 @@ fun main() {
     Files.createDirectories(saveDir)
 
     val generator = StrictGenerator { _, _, _ -> }
-    val scriptLoader = Loader { Script(Files.readAllBytes(loadDir.resolve(it.toString()))) }.caching()
+    val scriptLoader = Loader<Int, Script> { Script(Files.readAllBytes(loadDir.resolve(it.toString()))) }.caching()
     val scriptIds = loadDir.list().mapTo(TreeSet()) { it.toInt() }
 
     val fs = decompile(scriptLoader.withIds(scriptIds), generator)

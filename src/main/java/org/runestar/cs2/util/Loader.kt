@@ -1,47 +1,52 @@
 package org.runestar.cs2.util
 
-fun interface Loader<T : Any> {
+typealias IntLoader<T> = Loader<Int, T>
 
-    fun load(id: Int): T?
+fun interface Loader<K : Any, T : Any> {
 
-    interface Keyed<T : Any> : Loader<T> {
+    fun load(key: K): T?
 
-        val ids: Set<Int>
+    interface Keyed<K : Any, T : Any> : Loader<K, T> {
+
+        val keys: Set<K>
     }
 
-    data class Map<T : Any>(val map: kotlin.collections.Map<Int, T>) : Keyed<T> {
+    data class Map<K : Any, T : Any>(val map: kotlin.collections.Map<K, T>) : Keyed<K, T> {
 
-        override fun load(id: Int): T? = map[id]
+        override fun load(key: K): T? = map[key]
 
-        override val ids: Set<Int> get() = map.keys
+        override val keys: Set<K> get() = map.keys
     }
 
-    data class Constant<T : Any>(val t: T): Loader<T> {
+    data class Constant<K : Any, T : Any>(val t: T): Loader<K, T> {
 
-        override fun load(id: Int) = t
+        override fun load(key: K) = t
     }
 }
 
-fun <T : Any> Loader<T>.caching(): Loader<T> = object : Loader<T> {
+fun <K : Any, T : Any> Loader<K, T>.caching(): Loader<K, T> = object : Loader<K, T> {
 
-    private val cache = HashMap<Int, T?>()
+    private val cache = HashMap<K, T?>()
 
-    override fun load(id: Int): T? = cache[id] ?: if (id in cache) null else this@caching.load(id).also { cache[id] = it }
+    override fun load(key: K): T? = cache[key] ?: if (key in cache) null else this@caching.load(key).also { cache[key] = it }
 }
 
-fun <T : Any> Loader<T>.withIds(ids: Set<Int>): Loader.Keyed<T> = object : Loader.Keyed<T>, Loader<T> by this {
+fun <T : Any> Loader<Int, T>.withIds(ids: Set<Int>): Loader.Keyed<Int, T> = object : Loader.Keyed<Int, T>, Loader<Int, T> by this {
 
-    override val ids get() = ids
+    override val keys get() = ids
 }
 
-fun <T : Any> Loader<T>.loadNotNull(id: Int): T = checkNotNull(load(id)) { "Value for id $id was null" }
+fun <K : Any, T : Any> Loader<K, T>.loadNotNull(key: K): T = checkNotNull(load(key)) { "Value for key $key was null" }
 
-fun <T : Any> Loader<T>.orElse(other: Loader<T>): Loader<T> = Loader { load(it) ?: other.load(it) }
+fun <K : Any, T : Any> Loader<K, T>.orElse(other: Loader<K, T>): Loader<K, T> = Loader { load(it) ?: other.load(it) }
 
-fun <T : Any, E : Any> Loader<T>.map(transform: (T) -> E): Loader<E> = Loader { load(it)?.let(transform) }
+fun <K : Any, T : Any, E : Any> Loader<K, T>.map(transform: (T) -> E): Loader<K, E> = Loader { load(it)?.let(transform) }
 
-fun <T : Any, E : Any> Loader<T>.mapIndexed(transform: (Int, T) -> E): Loader<E> = Loader { id -> load(id)?.let { transform(id, it) } }
+fun <T : Any, E : Any> Loader<Int, T>.mapIndexed(transform: (Int, T) -> E): Loader<Int, E> = Loader { id -> load(id)?.let { transform(id, it) } }
 
-fun <T : Any> Loader(t: T) = Loader.Constant(t)
 
-fun <T : Any> Loader(map: Map<Int, T>) = Loader.Map(map)
+fun <T : Any> intLoader(t: T) = loader<Int, T>(t)
+
+fun <K : Any, T : Any> loader(t: T) = Loader.Constant<K, T>(t)
+
+fun <K : Any, T : Any> loader(map: Map<K, T>) = Loader.Map(map)

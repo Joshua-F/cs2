@@ -34,32 +34,34 @@ import org.runestar.cs2.SETTING_NAMES
 import org.runestar.cs2.STAT_NAMES
 import org.runestar.cs2.STRUCT_NAMES
 import org.runestar.cs2.SYNTH_NAMES
-import org.runestar.cs2.util.Loader
+import org.runestar.cs2.util.IntLoader
 import org.runestar.cs2.bin.Type
 import org.runestar.cs2.WINDOWMODE_NAMES
 import org.runestar.cs2.ir.*
+import org.runestar.cs2.util.intLoader
+import org.runestar.cs2.util.loader
 import org.runestar.cs2.util.loadNotNull
 import org.runestar.cs2.util.map
 import org.runestar.cs2.util.mapIndexed
 import org.runestar.cs2.util.orElse
 import java.util.TreeMap
 
-private val VALUE = Loader { it.toString() }
+private val VALUE = IntLoader { it.toString() }
 
-private val NULL = Loader { if (it == -1) "null" else null }
+private val NULL = IntLoader { if (it == -1) "null" else null }
 
-private fun Loader<String>.quote() = map { '"' + it + '"' }
+private fun IntLoader<String>.quote() = map { '"' + it + '"' }
 
-private fun Loader<String>.prefix(prefix: String) = map { prefix + it }
+private fun IntLoader<String>.prefix(prefix: String) = map { prefix + it }
 
-private val COORDS = Loader {
+private val COORDS = IntLoader {
     val plane = it ushr 28
     val x = (it ushr 14) and 0x3FFF
     val z = it and 0x3FFF
     "${plane}_${x / 64}_${z / 64}_${x and 0x3F}_${z and 0x3F}"
 }
 
-private val COLOUR_CONSTANTS = Loader(mapOf(
+private val COLOUR_CONSTANTS = loader(mapOf(
         0xFF0000 to "^red",
         0x00FF00 to "^green",
         0x0000FF to "^blue",
@@ -70,12 +72,12 @@ private val COLOUR_CONSTANTS = Loader(mapOf(
         0x000000 to "^black"
 ))
 
-private val COLOURS = Loader {
+private val COLOURS = IntLoader {
     check((it shr 24) == 0)
     "0x%06x".format(it)
 }
 
-private val INT_CONSTANTS = Loader(mapOf(
+private val INT_CONSTANTS = loader(mapOf(
         Int.MAX_VALUE to "^max_32bit_int",
         Int.MIN_VALUE to "^min_32bit_int"
 ))
@@ -85,34 +87,34 @@ private val TOPLEVELINTERFACES = unique(TOPLEVELINTERFACE, INTERFACE_NAMES)
 private val OVERLAYINTERFACES = unique(OVERLAYINTERFACE, INTERFACE_NAMES)
 private val DBTABLES = unique(DBTABLE, DBTABLE_NAMES)
 
-private val COMPONENTS = Loader { INTERFACES.loadNotNull(it shr 16) + ':' + (it and 0xFFFF) }
-private val DBCOLUMNS = Loader {
+private val COMPONENTS = IntLoader { INTERFACES.loadNotNull(it shr 16) + ':' + (it and 0xFFFF) }
+private val DBCOLUMNS = IntLoader {
     val tableName = DBTABLES.loadNotNull(it shr 12)
     val columnName = DBCOLUMN_NAMES.load(it and 0xf.inv()) ?: (it shr 4 and 0xFF)
     "$tableName:$columnName"
 }
 
-private fun cst(prefix: String, loader: Loader<String>) = loader.prefix('^' + prefix + '_').orElse(NULL).orElse(VALUE)
+private fun cst(prefix: String, loader: IntLoader<String>) = loader.prefix('^' + prefix + '_').orElse(NULL).orElse(VALUE)
 
-private fun Loader<String>.idSuffix() = mapIndexed { id, n -> n + '_' + id }
+private fun IntLoader<String>.idSuffix() = mapIndexed { id, n -> n + '_' + id }
 
-private fun unique(prototype: Prototype, loader: Loader<String>) = loader.orElse(unknown(prototype))
+private fun unique(prototype: Prototype, loader: IntLoader<String>) = loader.orElse(unknown(prototype))
 
-private fun uniqueExhaustive(loader: Loader<String>) = loader.orElse(NULL)
+private fun uniqueExhaustive(loader: IntLoader<String>) = loader.orElse(NULL)
 
-private fun unknown(prototype: Prototype) = NULL.orElse(Loader(prototype.identifier).idSuffix())
+private fun unknown(prototype: Prototype) = NULL.orElse(intLoader(prototype.identifier).idSuffix())
 
-private fun nonUnique(prototype: Prototype, loader: Loader<String>) = NULL.orElse(loader.orElse(Loader(prototype.identifier)).idSuffix())
+private fun nonUnique(prototype: Prototype, loader: IntLoader<String>) = NULL.orElse(loader.orElse(intLoader(prototype.identifier)).idSuffix())
 
-private val PROTOTYPES = HashMap<Prototype, Loader<String>>().apply {
+private val PROTOTYPES = HashMap<Prototype, IntLoader<String>>().apply {
     this[INT] = INT_CONSTANTS.orElse(VALUE)
     this[COORD] = NULL.orElse(COORDS)
     this[COLOUR] = NULL.orElse(COLOUR_CONSTANTS).orElse(COLOURS)
     this[COMPONENT] = NULL.orElse(COMPONENTS)
     this[ENTITYOVERLAY] = NULL.orElse(VALUE)
-    this[TYPE] = Loader { Type.of(it.toByte()).literal }
+    this[TYPE] = IntLoader { Type.of(it.toByte()).literal }
     this[BOOL] = BOOLEAN_NAMES.prefix("^").orElse(NULL)
-    this[GRAPHIC] = NULL.orElse(GRAPHIC_NAMES.orElse(Loader(GRAPHIC.identifier).idSuffix()).quote())
+    this[GRAPHIC] = NULL.orElse(GRAPHIC_NAMES.orElse(intLoader(GRAPHIC.identifier).idSuffix()).quote())
     this[NPC_UID] = NULL.orElse(VALUE)
     this[PLAYER_UID] = NULL.orElse(VALUE)
 

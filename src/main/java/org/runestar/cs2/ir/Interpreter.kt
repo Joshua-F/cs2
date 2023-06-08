@@ -2,7 +2,6 @@ package org.runestar.cs2.ir
 
 import org.runestar.cs2.bin.Script
 import org.runestar.cs2.bin.StackType
-import org.runestar.cs2.bin.Type
 import org.runestar.cs2.bin.Value
 import org.runestar.cs2.bin.int
 import org.runestar.cs2.util.Chain
@@ -14,26 +13,26 @@ import org.runestar.cs2.util.loadNotNull
 import org.runestar.cs2.util.toUnsignedInt
 
 fun interpret(
-        scripts: Loader.Keyed<Script>,
-        commands: Loader<Command>,
-        paramTypes: Loader<Prototype>,
-        dbtableTypes: Loader<Array<Prototype>>
+        scripts: Loader.Keyed<Int, Script>,
+        commands: Loader<Int, Command>,
+        paramTypes: Loader<Int, Prototype>,
+        dbtableTypes: Loader<Int, Array<Prototype>>
 ) : FunctionSet {
     return Interpreter(scripts, commands, paramTypes, dbtableTypes).interpret()
 }
 
 private class Interpreter(
-        private val scripts: Loader.Keyed<Script>,
-        private val commands: Loader<Command>,
-        private val paramTypes: Loader<Prototype>,
-        private val dbtableTypes: Loader<Array<Prototype>>,
+        private val scripts: Loader.Keyed<Int, Script>,
+        private val commands: Loader<Int, Command>,
+        private val paramTypes: Loader<Int, Prototype>,
+        private val dbtableTypes: Loader<Int, Array<Prototype>>,
 ) {
 
     private val typings = Typings()
 
     private val callGraph = CallGraph()
 
-    fun interpret() = FunctionSet(scripts.ids.associateWith { interpret(it) }, typings, callGraph)
+    fun interpret() = FunctionSet(scripts.keys.associateWith { interpret(it) }, typings, callGraph)
 
     private fun interpret(scriptId: Int): Function {
         val state = state(scriptId)
@@ -84,9 +83,9 @@ private class Interpreter(
 }
 
 class InterpreterState(
-        val scripts: Loader<Script>,
-        val paramTypes: Loader<Prototype>,
-        val dbtableTypes: Loader<Array<Prototype>>,
+        val scripts: Loader<Int, Script>,
+        val paramTypes: Loader<Int, Prototype>,
+        val dbtableTypes: Loader<Int, Array<Prototype>>,
         val scriptId: Int,
         val script: Script,
         val typings: Typings,
