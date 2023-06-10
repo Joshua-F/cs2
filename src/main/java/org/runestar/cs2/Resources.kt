@@ -77,6 +77,8 @@ val DEVICEOPTION_NAMES = readNames("deviceoption-names.tsv")
 val GAMEOPTION_NAMES = readNames("gameoption-names.tsv")
 val SETTING_NAMES = readNames("setting-names.tsv")
 
+val GRAPHIC_CONSTANT_NAMES = readLoader("graphic-constants.tsv", { it }, { it })
+
 // must be at the bottom since it relies on other type names
 val SCRIPT_NAMES = readIntLoader("script-names.tsv") { ScriptName(it) }
 val SCRIPT_ARGS = readIntLoader("script-arguments.tsv") { it.split(",").map { literal -> PROTOTYPE_LOOKUP_TABLE[literal] ?: Prototype(Type.of(literal)) } }

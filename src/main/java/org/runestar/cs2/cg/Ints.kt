@@ -1,49 +1,9 @@
 package org.runestar.cs2.cg
 
-import org.runestar.cs2.BOOLEAN_NAMES
-import org.runestar.cs2.CHATFILTER_NAMES
-import org.runestar.cs2.CHATTYPE_NAMES
-import org.runestar.cs2.CLANTYPE_NAMES
-import org.runestar.cs2.CLIENTTYPE_NAMES
-import org.runestar.cs2.DBCOLUMN_NAMES
-import org.runestar.cs2.DBTABLE_NAMES
-import org.runestar.cs2.DEVICEOPTION_NAMES
-import org.runestar.cs2.FONTMETRICS_NAMES
-import org.runestar.cs2.GAMEOPTION_NAMES
-import org.runestar.cs2.GRAPHIC_NAMES
-import org.runestar.cs2.IFTYPE_NAMES
-import org.runestar.cs2.INTERFACE_NAMES
-import org.runestar.cs2.INV_NAMES
-import org.runestar.cs2.KEY_NAMES
-import org.runestar.cs2.LOCSHAPE_NAMES
-import org.runestar.cs2.LOC_NAMES
-import org.runestar.cs2.MAPAREA_NAMES
-import org.runestar.cs2.MINIMENU_ENTRY_TYPE_NAMES
-import org.runestar.cs2.MODEL_NAMES
-import org.runestar.cs2.NPC_NAMES
-import org.runestar.cs2.OBJ_NAMES
-import org.runestar.cs2.PARAM_NAMES
-import org.runestar.cs2.PLATFORMTYPE_NAMES
-import org.runestar.cs2.SEQ_NAMES
-import org.runestar.cs2.SETPOSH_NAMES
-import org.runestar.cs2.SETPOSV_NAMES
-import org.runestar.cs2.SETSIZE_NAMES
-import org.runestar.cs2.SETTEXTALIGNH_NAMES
-import org.runestar.cs2.SETTEXTALIGNV_NAMES
-import org.runestar.cs2.SETTING_NAMES
-import org.runestar.cs2.STAT_NAMES
-import org.runestar.cs2.STRUCT_NAMES
-import org.runestar.cs2.SYNTH_NAMES
-import org.runestar.cs2.util.IntLoader
+import org.runestar.cs2.*
 import org.runestar.cs2.bin.Type
-import org.runestar.cs2.WINDOWMODE_NAMES
 import org.runestar.cs2.ir.*
-import org.runestar.cs2.util.intLoader
-import org.runestar.cs2.util.loader
-import org.runestar.cs2.util.loadNotNull
-import org.runestar.cs2.util.map
-import org.runestar.cs2.util.mapIndexed
-import org.runestar.cs2.util.orElse
+import org.runestar.cs2.util.*
 import java.util.TreeMap
 
 private val VALUE = IntLoader { it.toString() }
@@ -114,7 +74,16 @@ private val PROTOTYPES = HashMap<Prototype, IntLoader<String>>().apply {
     this[ENTITYOVERLAY] = NULL.orElse(VALUE)
     this[TYPE] = IntLoader { Type.of(it.toByte()).literal }
     this[BOOL] = BOOLEAN_NAMES.prefix("^").orElse(NULL)
-    this[GRAPHIC] = NULL.orElse(GRAPHIC_NAMES.orElse(intLoader(GRAPHIC.identifier).idSuffix()).quote())
+    val graphicNameLoader = GRAPHIC_NAMES.orElse(intLoader(GRAPHIC.identifier).idSuffix())
+    this[GRAPHIC] = NULL.orElse {
+        val graphicName = graphicNameLoader.loadNotNull(it)
+        val constantName = GRAPHIC_CONSTANT_NAMES.load(graphicName)
+        if (constantName != null) {
+            constantName.asConstant()
+        } else {
+            graphicName.asIdentifier()
+        }
+    }
     this[NPC_UID] = NULL.orElse(VALUE)
     this[PLAYER_UID] = NULL.orElse(VALUE)
 
