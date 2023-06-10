@@ -10,7 +10,7 @@ import org.runestar.cs2.ir.interpret
 import org.runestar.cs2.util.Loader
 
 fun decompile(
-        scripts: Loader.Keyed<Script>,
+        scripts: Loader.Keyed<Int, Script>,
         generator: Generator,
 ): FunctionSet {
     val fs = interpret(scripts, Command.LOADER, PARAM_TYPES, DBTABLE_TYPES)

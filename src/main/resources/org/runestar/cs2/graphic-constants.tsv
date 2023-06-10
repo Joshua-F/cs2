@@ -1,0 +1,8 @@
+menu_buttons,0	frame_button
+menu_buttons,1	frame_button_hover
+menu_buttons,2	help_button
+menu_buttons,3	help_button_hover
+menu_buttons,4	back_button
+menu_buttons,5	back_button_hover
+menu_buttons,6	refresh_button
+menu_buttons,7	refresh_button_hover

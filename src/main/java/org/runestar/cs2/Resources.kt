@@ -5,11 +5,11 @@ import org.runestar.cs2.bin.Type
 import org.runestar.cs2.ir.PROTOTYPE_LOOKUP_TABLE
 import org.runestar.cs2.ir.Prototype
 import org.runestar.cs2.util.Loader
+import org.runestar.cs2.util.loader
 import org.runestar.cs2.util.orElse
 import org.runestar.cs2.util.thisClass
-
-private fun <T : Any> readLoader(fileName: String, keyMapper: (String) -> Int = { it.toInt() }, valueMapper: (String) -> T): Loader.Map<T> {
-    val map = HashMap<Int, T>()
+private fun <K : Any, T : Any> readLoader(fileName: String, keyMapper: (String) -> K, valueMapper: (String) -> T): Loader.Map<K, T> {
+    val map = HashMap<K, T>()
     thisClass.getResourceAsStream(fileName).bufferedReader().use {
         while (true) {
             val line = it.readLine() ?: break
@@ -19,12 +19,16 @@ private fun <T : Any> readLoader(fileName: String, keyMapper: (String) -> Int = 
             check(map.put(id, v) == null)
         }
     }
-    return Loader(map)
+    return loader(map)
 }
 
-private fun readNames(fileName: String, keyMapper: (String) -> Int = { it.toInt() }): Loader.Map<String> = readLoader(fileName, keyMapper) { it }
-private fun readPrototype(fileName: String): Loader.Map<Prototype> = readLoader(fileName) { PROTOTYPE_LOOKUP_TABLE[it] ?: Prototype(Type.of(it)) }
-private fun readPrototypeArray(fileName: String): Loader.Map<Array<Prototype>> = readLoader(fileName) {
+private fun <T : Any> readIntLoader(fileName: String, keyMapper: (String) -> Int = { it.toInt() }, valueMapper: (String) -> T): Loader.Map<Int, T> {
+    return readLoader(fileName, keyMapper, valueMapper)
+}
+
+private fun readNames(fileName: String, keyMapper: (String) -> Int = { it.toInt() }): Loader.Map<Int, String> = readIntLoader(fileName, keyMapper) { it }
+private fun readPrototype(fileName: String): Loader.Map<Int, Prototype> = readIntLoader(fileName) { PROTOTYPE_LOOKUP_TABLE[it] ?: Prototype(Type.of(it)) }
+private fun readPrototypeArray(fileName: String): Loader.Map<Int, Array<Prototype>> = readIntLoader(fileName) {
     it.split(",").map {
             split -> PROTOTYPE_LOOKUP_TABLE[split] ?: Prototype(Type.of(split))
     }.toTypedArray()
@@ -73,6 +77,8 @@ val DEVICEOPTION_NAMES = readNames("deviceoption-names.tsv")
 val GAMEOPTION_NAMES = readNames("gameoption-names.tsv")
 val SETTING_NAMES = readNames("setting-names.tsv")
 
+val GRAPHIC_CONSTANT_NAMES = readLoader("graphic-constants.tsv", { it }, { it })
+
 // must be at the bottom since it relies on other type names
-val SCRIPT_NAMES = readLoader("script-names.tsv") { ScriptName(it) }
-val SCRIPT_ARGS = readLoader("script-arguments.tsv") { it.split(",").map { literal -> PROTOTYPE_LOOKUP_TABLE[literal] ?: Prototype(Type.of(literal)) } }
+val SCRIPT_NAMES = readIntLoader("script-names.tsv") { ScriptName(it) }
+val SCRIPT_ARGS = readIntLoader("script-arguments.tsv") { it.split(",").map { literal -> PROTOTYPE_LOOKUP_TABLE[literal] ?: Prototype(Type.of(literal)) } }

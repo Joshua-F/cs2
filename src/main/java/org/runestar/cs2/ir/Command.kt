@@ -14,6 +14,7 @@ import org.runestar.cs2.ir.NPC_UID as _NPC_UID
 import org.runestar.cs2.ir.PLAYER_UID as _PLAYER_UID
 import org.runestar.cs2.bin.string
 import org.runestar.cs2.util.Loader
+import org.runestar.cs2.util.loader
 import org.runestar.cs2.util.loadNotNull
 
 interface Command {
@@ -47,9 +48,9 @@ interface Command {
             addAll(Param.values().asList())
         }
 
-        fun loader(commands: Iterable<Command>): Loader<Command> = Loader(commands.associateBy { it.id })
+        fun loader(commands: Iterable<Command>): Loader<Int, Command> = loader(commands.associateBy { it.id })
 
-        val LOADER: Loader<Command> = loader(COMMANDS)
+        val LOADER: Loader<Int, Command> = loader(COMMANDS)
     }
 
     object Switch : Command {
