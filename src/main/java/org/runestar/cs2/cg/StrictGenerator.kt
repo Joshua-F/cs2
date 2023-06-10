@@ -1,23 +1,15 @@
 package org.runestar.cs2.cg
 
-import org.runestar.cs2.ir.EventProperty
 import org.runestar.cs2.bin.*
 import org.runestar.cs2.SCRIPT_NAMES
 import org.runestar.cs2.bin.StackType
 import org.runestar.cs2.bin.Trigger
 import org.runestar.cs2.cfa.Construct
 import org.runestar.cs2.bin.int
-import org.runestar.cs2.ir.Element
-import org.runestar.cs2.ir.Expression
-import org.runestar.cs2.ir.Function
-import org.runestar.cs2.ir.FunctionSet
-import org.runestar.cs2.ir.Instruction
-import org.runestar.cs2.ir.Variable
-import org.runestar.cs2.ir.asList
-import org.runestar.cs2.ir.prototype
 import org.runestar.cs2.bin.string
-import org.runestar.cs2.ir.identifier
-import org.runestar.cs2.ir.literal
+import org.runestar.cs2.ir.*
+import org.runestar.cs2.ir.Function
+import org.runestar.cs2.util.asConstant
 
 fun StrictGenerator(writer: (scriptId: Int, scriptName: String, script: String) -> Unit) = object : StrictGenerator() {
     override fun write(scriptId: Int, scriptName: String, script: String) = writer(scriptId, scriptName, script)
@@ -53,6 +45,7 @@ private class Writer(
     private var indents = 0
 
     private var inCalc = false
+    private var inHookArgument = false
 
     private var endingLine = true
 
@@ -258,10 +251,42 @@ private class Writer(
 
     private fun appendConst(const: Element.Constant) {
         when (const.value.stackType) {
-            StackType.STRING -> append('"').append(const.value.string).append('"')
+            StackType.STRING ->  {
+                if (inHookArgument) {
+                    appendHardCodedHookStringConstant(const.value.string)
+                } else {
+                    appendHardCodedStringConstant(const.value.string)
+                }
+            }
             StackType.INT -> append(intConstantToString(const.value.int, fs.typings.of(const).prototype))
         }
     }
+
+    private fun appendHardCodedHookStringConstant(value: String) {
+        append(getHardCodedHookStringConstant(value) ?: error("Expected a constant reference inside a hook but got: $value"))
+    }
+
+    private fun getHardCodedHookStringConstant(value: String)  = getHardCodedStringConstant(value) ?: when(value) {
+        "" -> "empty"
+        "null" -> "null"
+        "K" -> "upper_k"
+        "M" -> "upper_m"
+        "B" -> "upper_b"
+        "1" -> "one"
+        "2" -> "two"
+        else -> null
+    }?.asConstant()
+
+    private fun appendHardCodedStringConstant(value: String) {
+        append(getHardCodedStringConstant(value) ?: "\"$value\"")
+    }
+
+    private fun getHardCodedStringConstant(value: String) = when (value) {
+        "\"" -> "quote"
+        ">" -> "gt"
+        "\\<" -> "lt"
+        else -> null
+    }?.asConstant()
 
     private fun appendOperation(expr: Expression.Operation) {
         val args = expr.arguments.asList
@@ -283,7 +308,7 @@ private class Writer(
             JOIN_STRING -> {
                 append('"')
                 for (a in args) {
-                    if (a is Element.Constant && a.value.stackType == StackType.STRING) {
+                    if (a is Element.Constant && a.value.stackType == StackType.STRING && getHardCodedStringConstant(a.value.string) == null) {
                         append(a.value.string)
                     } else {
                         append('<').appendExpr(a).append('>')
@@ -365,7 +390,11 @@ private class Writer(
             }
 
             if (args.isNotEmpty()) {
+                // Hooks cannot be inside anything else, so we don't need to keep track of the old
+                // state in here similar to the calc() expression check "wasCalc".
+                inHookArgument = true
                 append('(').appendExprs(args).append(')')
+                inHookArgument = false
             }
             if (triggers.isNotEmpty()) {
                 append('{').appendExprs(triggers).append('}')
