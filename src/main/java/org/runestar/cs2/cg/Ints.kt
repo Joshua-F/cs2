@@ -5,6 +5,7 @@ import org.runestar.cs2.CHATFILTER_NAMES
 import org.runestar.cs2.CHATTYPE_NAMES
 import org.runestar.cs2.CLANTYPE_NAMES
 import org.runestar.cs2.CLIENTTYPE_NAMES
+import org.runestar.cs2.COMPONENT_NAMES
 import org.runestar.cs2.DBCOLUMN_NAMES
 import org.runestar.cs2.DBTABLE_NAMES
 import org.runestar.cs2.DEVICEOPTION_NAMES
@@ -31,6 +32,7 @@ import org.runestar.cs2.SETSIZE_NAMES
 import org.runestar.cs2.SETTEXTALIGNH_NAMES
 import org.runestar.cs2.SETTEXTALIGNV_NAMES
 import org.runestar.cs2.SETTING_NAMES
+import org.runestar.cs2.SONG_NAMES
 import org.runestar.cs2.STAT_NAMES
 import org.runestar.cs2.STRUCT_NAMES
 import org.runestar.cs2.SYNTH_NAMES
@@ -49,6 +51,8 @@ private val VALUE = Loader { it.toString() }
 private val NULL = Loader { if (it == -1) "null" else null }
 
 private fun Loader<String>.quote() = map { '"' + it + '"' }
+
+private fun Loader<String>.smartQuote() = map { if (it.contains(" ")) '"' + it + '"' else it }
 
 private fun Loader<String>.prefix(prefix: String) = map { prefix + it }
 
@@ -85,7 +89,11 @@ private val TOPLEVELINTERFACES = unique(TOPLEVELINTERFACE, INTERFACE_NAMES)
 private val OVERLAYINTERFACES = unique(OVERLAYINTERFACE, INTERFACE_NAMES)
 private val DBTABLES = unique(DBTABLE, DBTABLE_NAMES)
 
-private val COMPONENTS = Loader { INTERFACES.loadNotNull(it shr 16) + ':' + (it and 0xFFFF) }
+private val COMPONENTS = Loader {
+    val interfaceName = INTERFACES.loadNotNull(it shr 16)
+    val componentName = COMPONENT_NAMES.load(it) ?: "com_${it and 0xFFFF}"
+    "$interfaceName:$componentName"
+}
 private val DBCOLUMNS = Loader {
     val tableName = DBTABLES.loadNotNull(it shr 12)
     val columnName = DBCOLUMN_NAMES.load(it and 0xf.inv()) ?: (it shr 4 and 0xFF)
@@ -113,6 +121,7 @@ private val PROTOTYPES = HashMap<Prototype, Loader<String>>().apply {
     this[TYPE] = Loader { Type.of(it.toByte()).literal }
     this[BOOL] = BOOLEAN_NAMES.prefix("^").orElse(NULL)
     this[GRAPHIC] = NULL.orElse(GRAPHIC_NAMES.orElse(Loader(GRAPHIC.identifier).idSuffix()).quote())
+    this[MIDI] = NULL.orElse(SONG_NAMES.orElse(Loader(MIDI.identifier).idSuffix()).smartQuote())
     this[NPC_UID] = NULL.orElse(VALUE)
     this[PLAYER_UID] = NULL.orElse(VALUE)
 
@@ -123,7 +132,6 @@ private val PROTOTYPES = HashMap<Prototype, Loader<String>>().apply {
     this[ENUM] = unknown(ENUM)
     this[CATEGORY] = unknown(CATEGORY)
     this[MAPELEMENT] = unknown(MAPELEMENT)
-    this[MIDI] = unknown(MIDI)
 
     this[CHAR] = NULL
     this[AREA] = NULL
