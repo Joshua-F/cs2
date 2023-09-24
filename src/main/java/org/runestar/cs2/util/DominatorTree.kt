@@ -11,17 +11,28 @@ fun <N : Any> dominatorTree(graph: DirectedGraph<N>): DirectedGraph<N> {
 
     val idoms = HashMap<N, N>()
 
-    fun intersect(n1: N, n2: N): N {
-        var f1 = n1
-        var f2 = n2
+    fun post(finger: N)= postOrderMap[finger] ?: error("Missing from post order map: $finger")
+
+    fun intersect(pred: N, idom: N): N {
+        if (!postOrderMap.contains(pred) || !postOrderMap.contains(idom)){
+            return pred
+        }
+        var f1 = pred
+        var f2 = idom
         while (f1 != f2) {
-            val f2v = postOrderMap.getValue(f2)
-            while (postOrderMap.getValue(f1) < f2v) {
-                f1 = idoms.getValue(f1)
+            while (post(f1) < post(f2)) {
+                val value = idoms.getValue(f1)
+                if (!postOrderMap.contains(value)){
+                    break
+                }
+                f1 = value
             }
-            val f1v = postOrderMap.getValue(f1)
-            while (postOrderMap.getValue(f2) < f1v) {
-                f2 = idoms.getValue(f2)
+            while (post(f2) < post(f1)) {
+                val value = idoms.getValue(f2)
+                if (!postOrderMap.contains(value)){
+                    break
+                }
+                f2 = value
             }
         }
         return f1

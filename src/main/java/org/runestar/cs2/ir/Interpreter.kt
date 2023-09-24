@@ -117,7 +117,8 @@ class InterpreterState(
 
     fun push(stackTypes: List<StackType>): List<Element.Access> = stackTypes.map { push(it) }
 
-    fun pop(stackType: StackType): Element.Access = stack.pop().also { check(it.stackType == stackType) }
+    fun pop(stackType: StackType): Element.Access = stack.delegate.lastOrNull { it.stackType == stackType }
+        .also { stack.delegate.remove(it) } ?: error("")
 
     fun pop(count: Int): List<Element.Access> = stack.pop(count)
 

@@ -116,9 +116,14 @@ private val PROTOTYPES = HashMap<Prototype, Loader<String>>().apply {
     this[NPC_UID] = NULL.orElse(VALUE)
     this[PLAYER_UID] = NULL.orElse(VALUE)
 
+    this[IDKIT] = unknown(IDKIT)
+    this[CHATCAT] = unknown(CHATCAT)
+    this[CHATPHRASE] = unknown(CHATPHRASE)
+    this[CURSOR] = unknown(CURSOR)
     this[ENUM] = unknown(ENUM)
     this[CATEGORY] = unknown(CATEGORY)
     this[MAPELEMENT] = unknown(MAPELEMENT)
+    this[MIDI] = unknown(MIDI)
 
     this[CHAR] = NULL
     this[AREA] = NULL
