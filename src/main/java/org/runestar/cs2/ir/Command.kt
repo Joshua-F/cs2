@@ -468,7 +468,7 @@ interface Command {
         AFFILIATE(listOf(), listOf(INT)),
 
         ENUM_STRING(listOf(_ENUM, INT), listOf(STRING)),
-        ENUM_HASOUTPUT(listOf(_ENUM, INT), listOf(BOOLEAN)),
+        ENUM_HASOUTPUT(listOf(TYPE, _ENUM, INT), listOf(BOOLEAN)),
         ENUM_HASOUTPUT_STRING(listOf(_ENUM, STRING), listOf(BOOLEAN)),
         ENUM_GETOUTPUTCOUNT(listOf(_ENUM), listOf(COUNT)),
 
