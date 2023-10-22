@@ -211,8 +211,6 @@ interface Command {
         POP_VARC_INT,
         PUSH_VARC_STRING,
         POP_VARC_STRING,
-        PUSH_VARCLANSETTING,
-        PUSH_VARCLAN,
         ;
 
         override val id = opcodes.getValue(name)
@@ -233,8 +231,6 @@ interface Command {
                 POP_VARC_INT -> Instruction.Assignment(Element.Access(Variable.varcint(state.operand.int)), state.pop(StackType.INT))
                 PUSH_VARC_STRING -> Instruction.Assignment(state.push(StackType.STRING), Element.Access(Variable.varcstring(state.operand.int)))
                 POP_VARC_STRING -> Instruction.Assignment(Element.Access(Variable.varcstring(state.operand.int)), state.pop(StackType.STRING))
-                PUSH_VARCLANSETTING -> Instruction.Assignment(state.push(StackType.INT), Element.Access(Variable.varclansetting(state.operand.int)))
-                PUSH_VARCLAN -> Instruction.Assignment(state.push(StackType.INT), Element.Access(Variable.varclan(state.operand.int)))
             }
             assign(state.typings.of(a.expression), state.typings.of(a.definitions))
             return a

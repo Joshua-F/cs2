@@ -38,14 +38,10 @@ const val POP_ARRAY_INT = 46
 const val PUSH_VARC_STRING = 47
 const val POP_VARC_STRING = 48
 const val SWITCH = 51
-const val PUSH_VARCLANSETTING = 74
-const val PUSH_VARCLAN = 76
 
 const val CC_CREATE = 100
 const val CC_DELETE = 101
 const val CC_DELETEALL = 102
-const val CC_CREATE_ENTITYOVERLAY = 103
-const val CC_DELETEALL_ENTITYOVERLAY = 104
 
 const val CC_FIND = 200
 const val IF_FIND = 201
