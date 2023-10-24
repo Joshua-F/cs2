@@ -6,11 +6,13 @@ import org.runestar.cs2.util.toByte
 enum class Type(desc: Char = 0.toChar(), literal: String? = null) {
 
     AREA('R'),
+    BAS('€'),
     BOOLEAN('1'),
     CATEGORY('y'),
     CHAR('z'),
     CHATCAT('k'),
     CHATPHRASE('e'),
+    CLIENTINTERFACE('©'),
     COMPONENT('I'),
     CURSOR('@'),
     COORD('c'),

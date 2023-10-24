@@ -1,3 +1,4 @@
+0	100guide_eggs_overlay
 1	100guide_flour_overlay
 2	100guide_inv_flour
 3	100guide_milk_overlay
@@ -11,7 +12,7 @@
 11	bank_deposit_box
 13	bankpin_main
 14	bankpin_settings
-15	banner_padlock_keys
+15	trawler_game_overlay
 16	banner_anti_virus
 21	banner_scamming
 22	banner_security
@@ -23,21 +24,10 @@
 30	blast_furnace_temp_gauge
 31	boardgames_challenge
 32	boardgames_draughts
-33	boardgames_draughts_options
-34	boardgames_draughts_overlay
-35	boardgames_draughts_view
 36	boardgames_runelink
-37	boardgames_runelink_options
-38	boardgames_runelink_overlay
-39	boardgames_runelink_view
 40	boardgames_runesquares
-41	boardgames_runesquares_options
-42	boardgames_runesquares_overlay
 43	boardgames_runesquares_view
 44	boardgames_runeversi
-45	boardgames_runeversi_options
-46	boardgames_runeversi_overlay
-47	boardgames_runeversi_view
 48	bob_locator_amulet
 51	burgh_map
 52	canoe
@@ -60,6 +50,7 @@
 69	chat_np2
 70	chat_np3
 71	chat_np4
+89	fade2
 94	confirm_destroy
 95	sailing_transport_world_map
 96	darkness_dark
@@ -121,7 +112,6 @@
 174	wom_scroll
 175	heat_overlay
 177	fade_from_white
-178	light2
 179	light_blue
 180	lightning_flash
 182	logout
@@ -192,7 +182,6 @@
 271	prayer
 272	priestperil_gravemonument
 273	prisonpete
-274	questjournal_v2
 275	questjournal_scroll
 282	ratcatcher_flute
 283	ratcatcher_flute_music
@@ -201,8 +190,6 @@
 286	regicide_still
 287	reinitialisation_puzzle
 290	roguesden_dials
-291	roguesden_gear_select
-292	roguesden_gears
 293	roguesden_puzzle
 294	rum_deal_censor
 295	rum_deal_title
@@ -212,15 +199,11 @@
 299	ship_journey
 300	smithing_new
 301	assister_interface
-307	skill_cookmany
-308	lotr_scroll
-309	skill_multi1
 310	slayer_staff_spells
 311	smelting
 312	sops_plaque_5
 313	smokeoverlay
 315	soulbane_angerbar
-316	soulbane_cut
 317	soulbane_darkness
 318	soulbane_scare
 319	staff_spells
@@ -292,7 +275,6 @@
 410	warguild_defence
 411	warguild_defence_mini
 412	warguild_dummy
-413	brew_telescope_overlay
 414	brew_game_over
 415	brew_overlay
 416	brew_worktable
@@ -347,7 +329,6 @@
 510	tol_pressure_machine
 511	tol_pipe_machine
 512	inventory_ranging
-513	inventory_wear
 514	brain_cat_overlay
 515	brain_gas_overlay
 516	trek_loading_screen
@@ -357,7 +338,6 @@
 522	dream_monster_stat
 523	dream_player_stats
 524	dream_title
-527	vm_museum_map
 528	vm_digsite
 532	vm_kudos
 534	vm_timeline
@@ -372,12 +352,9 @@
 546	dragon_slayer_qip_elvarg_fly
 547	dragon_slayer_qip_map
 548	toplevel
-549	toplevel_full
 550	friends2
 551	ignore2
-553	snapshot_main
 557	multi2_mes
-558	skill_multi6
 559	pattern_cards
 560	cws_warning_9
 561	cws_warning_21
@@ -400,7 +377,6 @@
 579	cws_warning_4
 580	cws_warning_20
 581	cws_warning_24
-582	skill_multi1_small
 583	cws_doomsayer
 584	kr_king_statue
 585	kr_pyramid_escape
@@ -425,9 +401,6 @@
 649	clanwars_viewing_orb
 650	cws_warning_30
 652	gravestone_shop
-653	bounty_overlay
-656	bounty_overlay_waiting
-657	bounty_warning
 658	xmas07_hat
 662	lore_stats_side
 663	lore_cats_side
@@ -435,7 +408,6 @@
 667	equip_screen2
 670	inventory_wear2
 671	lore_bank
-674	tutorial2_mesbox
 676	cws_warning_27
 677	cws_warning_28
 678	cws_warning_29
@@ -452,13 +424,6 @@
 711	sops_plaque_3
 715	banner_easter08
 722	summoning_side
-723	carpet_info
-724	carpet_runesquares
-725	carpet_runelink
-726	carpet_runeversi
-727	carpet_draughts
-728	carpet_main
-729	carpet_ticket
 741	lvl_scroll
 742	graphics_options
 743	sound_options
@@ -476,13 +441,9 @@
 756	boardgames_options
 757	npcchatlarge
 758	canoe_travel
-760	tutorial2_objbox
 762	bank_v2_main
 763	bank_v2_side
-765	tutorial2_switch_task
-766	tutorial2_death
 767	bank_v2_help
-769	tutorial2_text
 778	rcguild_side
 779	rcguild_rewards
 780	rcguild_map
@@ -516,3 +477,4 @@
 822	luc2_chapter3
 826	luc2_chapter1
 827	luc2_lucien_projectiles
+864	spirittree

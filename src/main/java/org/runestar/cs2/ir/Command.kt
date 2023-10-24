@@ -28,6 +28,7 @@ interface Command {
             add(Switch)
             add(Branch)
             add(Enum)
+            add(EnumHasOutput)
             add(Proc)
             add(Return)
             add(JoinString)
@@ -113,6 +114,28 @@ interface Command {
             val operation = Expression.Operation(listOf(valueType.stackType), id, args)
             val operationTyping = state.typings.of(operation).single()
             operationTyping.freeze(valueType)
+            assign(operationTyping, state.typings.of(value))
+            return Instruction.Assignment(value, operation)
+        }
+    }
+
+    object EnumHasOutput : Command {
+
+        override val id = ENUM_HASOUTPUT
+
+        override fun translate(state: InterpreterState): Instruction {
+            val key = state.pop(StackType.INT)
+            val enumId = state.pop(StackType.INT)
+            assign(state.typings.of(enumId), state.typings.of(_ENUM))
+            val keyType = Type.of((checkNotNull(state.peekValue()).int).toByte())
+            assign(state.typings.of(key), state.typings.of(Prototype(keyType)))
+            val keyTypeVar = state.pop(StackType.INT)
+            assign(state.typings.of(keyTypeVar), state.typings.of(TYPE))
+            val args = Expression(keyTypeVar, enumId, key)
+            val value = state.push(StackType.INT)
+            val operation = Expression.Operation(listOf(StackType.INT), id, args)
+            val operationTyping = state.typings.of(operation).single()
+            operationTyping.freeze(BOOLEAN)
             assign(operationTyping, state.typings.of(value))
             return Instruction.Assignment(value, operation)
         }
@@ -282,6 +305,7 @@ interface Command {
         _1121(listOf(INT, INT), listOf(), true),
         CC_SETALPHA(listOf(BOOLEAN), listOf(), true),
         CC_SETMODELZOOM(listOf(INT), listOf(), true),
+        CC_SETLINEDIRECTION(listOf(BOOLEAN), listOf(), true),
 
         CC_SETOBJECT(listOf(OBJ, NUM), listOf(), true),
         CC_SETNPCHEAD(listOf(NPC), listOf(), true),
@@ -289,6 +313,11 @@ interface Command {
         CC_SETNPCMODEL(listOf(NPC), listOf(), true),
         CC_SETPLAYERMODEL(listOf(), listOf(), true),
         CC_SETOBJECT_NONUM(listOf(OBJ, NUM), listOf(), true),
+        CC_SETOBJECT_WEARCOL(listOf(OBJ, NUM), listOf(), true),
+        CC_SETOBJECT_WEARCOL_NONUM(listOf(OBJ, NUM), listOf(), true),
+        CC_SETPLAYERMODEL_SELF(listOf(), listOf(), true),
+        CC_SETOBJECT_ALWAYSNUM(listOf(OBJ, NUM), listOf(), true),
+        CC_SETOBJECT_WEARCOL_ALWAYSNUM(listOf(OBJ, NUM), listOf(), true),
 
         CC_SETOP(listOf(OPINDEX, OP), listOf(), true),
         CC_SETDRAGGABLE(listOf(COMPONENT, INT), listOf(), true),
@@ -300,6 +329,8 @@ interface Command {
         CC_CLEAROPS(listOf(), listOf(), true),
         CC_SETTARGETCURSORS(listOf(CURSOR, CURSOR), listOf(), true),
         CC_SETOPCURSOR(listOf(INT, CURSOR), listOf(), true),
+        CC_SETPAUSETEXT(listOf(STRING), listOf(), true),
+        CC_SETTARGETOPCURSOR(listOf(CURSOR), listOf(), true),
 
         CC_GETX(listOf(), listOf(X), true),
         CC_GETY(listOf(), listOf(Y), true),
@@ -367,6 +398,11 @@ interface Command {
         IF_SETNPCMODEL(listOf(NPC, COMPONENT), listOf()),
         IF_SETPLAYERMODEL(listOf(COMPONENT), listOf()),
         IF_SETOBJECT_NONUM(listOf(OBJ, NUM, COMPONENT), listOf()),
+        IF_SETOBJECT_WEARCOL(listOf(OBJ, NUM, COMPONENT), listOf()),
+        IF_SETOBJECT_WEARCOL_NONUM(listOf(OBJ, NUM, COMPONENT), listOf()),
+        IF_SETPLAYERMODEL_SELF(listOf(COMPONENT), listOf()),
+        IF_SETOBJECT_ALWAYSNUM(listOf(OBJ, NUM, COMPONENT), listOf()),
+        IF_SETOBJECT_WEARCOL_ALWAYSNUM(listOf(OBJ, NUM, COMPONENT), listOf()),
 
         IF_SETOP(listOf(OPINDEX, OP, COMPONENT), listOf()),
         IF_SETDRAGGABLE(listOf(COMPONENT, INT, COMPONENT), listOf()),
@@ -378,6 +414,8 @@ interface Command {
         IF_CLEAROPS(listOf(COMPONENT), listOf()),
         IF_SETTARGETCURSORS(listOf(CURSOR, CURSOR, COMPONENT), listOf()),
         IF_SETOPCURSOR(listOf(INT, CURSOR, COMPONENT), listOf()),
+        IF_SETPAUSETEXT(listOf(STRING, COMPONENT), listOf()),
+        IF_SETTARGETOPCURSOR(listOf(CURSOR, COMPONENT), listOf()),
 
         IF_GETX(listOf(COMPONENT), listOf(X)),
         IF_GETY(listOf(COMPONENT), listOf(Y)),
@@ -422,6 +460,8 @@ interface Command {
         IF_DRAGPICKUP(listOf(COMPONENT, INT, INT), listOf()),
         CC_DRAGPICKUP(listOf(INT, INT), listOf(), true),
         RESUME_OBJDIALOG(listOf(OBJ), listOf()),
+        IF_OPENSUBCLIENT(listOf(COMPONENT, CLIENTINTERFACE), listOf()),
+        IF_CLOSESUBCLIENT(listOf(COMPONENT), listOf()),
 
         SOUND_SYNTH(listOf(SYNTH, INT, INT), listOf()),
         SOUND_SONG(listOf(INT), listOf()),
@@ -462,14 +502,14 @@ interface Command {
         MAP_LANG(listOf(), listOf(INT)),
         MOVECOORD(listOf(_COORD, X, Y, Z), listOf(_COORD)),
         AFFILIATE(listOf(), listOf(INT)),
+        PROFILE_CPU(listOf(), listOf(INT)),
 
         ENUM_STRING(listOf(_ENUM, INT), listOf(STRING)),
-        ENUM_HASOUTPUT(listOf(TYPE, _ENUM, INT), listOf(BOOLEAN)),
         ENUM_HASOUTPUT_STRING(listOf(_ENUM, STRING), listOf(BOOLEAN)),
         ENUM_GETOUTPUTCOUNT(listOf(_ENUM), listOf(COUNT)),
 
         FRIEND_COUNT(listOf(), listOf(COUNT)),
-        FRIEND_GETNAME(listOf(INDEX), listOf(USERNAME)),
+        FRIEND_GETNAME(listOf(INDEX), listOf(USERNAME, USERNAME)),
         FRIEND_GETWORLD(listOf(INDEX), listOf(WORLD)),
         FRIEND_GETRANK(listOf(INDEX), listOf(RANK)),
         FRIEND_SETRANK(listOf(USERNAME, RANK), listOf()),
@@ -490,7 +530,7 @@ interface Command {
         CLAN_JOINCHAT(listOf(USERNAME), listOf()),
         CLAN_LEAVECHAT(listOf(), listOf()),
         IGNORE_COUNT(listOf(), listOf(COUNT)),
-        IGNORE_GETNAME(listOf(INDEX), listOf(USERNAME)),
+        IGNORE_GETNAME(listOf(INDEX), listOf(USERNAME, USERNAME)),
         IGNORE_TEST(listOf(USERNAME), listOf(BOOLEAN)),
         CLAN_ISSELF(listOf(INDEX), listOf(BOOLEAN)),
         CLAN_GETCHATOWNERNAME(listOf(), listOf(USERNAME)),
@@ -498,6 +538,10 @@ interface Command {
         FRIEND_PLATFORM(listOf(INDEX), listOf(BOOLEAN)),
         FRIEND_GETSLOTFROMNAME(listOf(USERNAME), listOf(INDEX)),
         PLAYERCOUNTRY(listOf(), listOf(INT)),
+        IGNORE_ADD_TEMP(listOf(USERNAME), listOf(INT)),
+        IGNORE_IS_TEMP(listOf(INT), listOf(BOOLEAN)),
+        CLAN_GETCHATUSERNAME_UNFILTERED(listOf(INT), listOf(STRING)),
+        IGNORE_GETNAME_UNFILTERED(listOf(INT), listOf(STRING)),
 
         STOCKMARKET_GETOFFERTYPE(listOf(INT), listOf(INT)),
         STOCKMARKET_GETOFFERITEM(listOf(INT), listOf(OBJ)),
@@ -555,6 +599,7 @@ interface Command {
         CHAR_TOLOWERCASE(listOf(CHAR), listOf(CHAR)),
         CHAR_TOUPPERCASE(listOf(CHAR), listOf(CHAR)),
         TOSTRING_LOCALISED(listOf(INT, BOOLEAN), listOf(STRING)),
+        STRINGWIDTH(listOf(STRING, FONTMETRICS), listOf(WIDTH)),
 
         OC_NAME(listOf(OBJ), listOf(STRING)),
         OC_OP(listOf(OBJ, OPINDEX), listOf(OP)),
@@ -564,13 +609,16 @@ interface Command {
         OC_CERT(listOf(OBJ), listOf(OBJ)),
         OC_UNCERT(listOf(OBJ), listOf(OBJ)),
         OC_MEMBERS(listOf(OBJ), listOf(BOOL)),
+        _4209(listOf(OBJ, INT), listOf(CURSOR)),
         OC_FIND(listOf(STRING, BOOLEAN), listOf(INT)),
         OC_FINDNEXT(listOf(), listOf(OBJ)),
         OC_FINDRESET(listOf(), listOf()),
 
+        BAS_GETANIM_READY(listOf(BAS), listOf(SEQ)),
+
         CHAT_GETFILTER_PUBLIC(listOf(), listOf(CHATFILTER)),
         CHAT_SETFILTER(listOf(CHATFILTER, CHATFILTER, CHATFILTER), listOf()),
-        CHAT_SENDABUSEREPORT(listOf(STRING, INT, INT), listOf()),
+        CHAT_SENDABUSEREPORT(listOf(STRING, INT, INT, STRING), listOf()),
         CHAT_GETHISTORYMESSAGE(listOf(INT), listOf(_MES)),
         CHAT_GETHISTORYTYPE(listOf(INT), listOf(CHATTYPE)),
         CHAT_GETFILTER_PRIVATE(listOf(), listOf(CHATFILTER)),
@@ -579,9 +627,12 @@ interface Command {
         CHAT_GETHISTORYNAME(listOf(INT), listOf(USERNAME)),
         CHAT_GETHISTORYCLAN(listOf(INT), listOf(STRING)),
         CHAT_GETHISTORYPHRASE(listOf(INT), listOf(CHATPHRASE)),
-        CHAT_PLAYERNAME(listOf(), listOf(USERNAME)),
+        CHAT_PLAYERNAME_UNFILTERED(listOf(), listOf(USERNAME)),
         CHAT_GETFILTER_TRADE(listOf(), listOf(CHATFILTER)),
         CHAT_GETHISTORYLENGTH(listOf(), listOf(LENGTH)),
+        _5018(listOf(INT), listOf(CHATTYPE)),
+        _5019(listOf(INT), listOf(STRING)),
+        CHAT_PLAYERNAME(listOf(), listOf(USERNAME)),
 
         CHATCAT_GETDESC(listOf(CHATCAT), listOf(STRING)),
         CHATCAT_GETSUBCATCOUNT(listOf(CHATCAT), listOf(INT)),
@@ -614,18 +665,33 @@ interface Command {
 
         WORLDMAP_SETZOOM(listOf(INT), listOf()),
         WORLDMAP_GETZOOM(listOf(), listOf(INT)),
-        _5202(listOf(INT), listOf()),
-        _5203(listOf(STRING), listOf()),
-        _5204(listOf(STRING), listOf(STRING)),
-        _5205(listOf(STRING), listOf()),
-        WORLDMAP_GETMAP(listOf(_COORD), listOf(STRING)),
-        WORLDMAP_GETMAPNAME(listOf(STRING), listOf(STRING)),
+        _5205(listOf(MAPAREA), listOf()),
+        WORLDMAP_GETMAP(listOf(_COORD), listOf(MAPAREA)),
+        WORLDMAP_GETMAPNAME(listOf(MAPAREA), listOf(STRING)),
         WORLDMAP_GETSIZE(listOf(), listOf(INT, INT)),
         WORLDMAP_GETDISPLAYPOSITION(listOf(), listOf(INT, INT)),
-        _5214(listOf(_COORD), listOf()),
-        _5215(listOf(_COORD, STRING), listOf(BOOLEAN)),
-        WORLDMAP_GETCONFIGZOOM(listOf(), listOf(INT)),
+        _5210(listOf(MAPAREA), listOf(INT, INT)),
+        WORLDMAP_LISTELEMENT_START(listOf(), listOf(MAPELEMENT, _COORD)),
+        WORLDMAP_LISTELEMENT_NEXT(listOf(), listOf(MAPELEMENT, _COORD)),
+        WORLDMAP_JUMPTOSOURCECOORD(listOf(_COORD), listOf()),
+        WORLDMAP_COORDINMAP(listOf(_COORD, MAPAREA), listOf(BOOLEAN)),
+        WORLDMAP_GETCONFIGZOOM(listOf(MAPAREA), listOf(INT)),
         WORLDMAP_ISLOADED(listOf(), listOf(BOOLEAN)),
+        WORLDMAP_JUMPTODISPLAYCOORD(listOf(_COORD), listOf()),
+        WORLDMAP_GETSOURCEPOSITION(listOf(), listOf(INT, INT)),
+        WORLDMAP_SETMAP_COORD(listOf(MAPAREA, _COORD), listOf()),
+        WORLDMAP_GETDISPLAYCOORD(listOf(_COORD), listOf(INT, INT)),
+        WORLDMAP_GETSOURCECOORD(listOf(_COORD), listOf(INT, INT)),
+        WORLDMAP_FLASHELEMENT(listOf(INT), listOf()),
+        WORLDMAP_SETMAP_COORD_OVERRIDE(listOf(MAPAREA, _COORD), listOf()),
+        WORLDMAP_DISABLEELEMENTS(listOf(BOOLEAN), listOf()),
+        WORLDMAP_GETDISABLEELEMENTS(listOf(), listOf(BOOLEAN)),
+        WORLDMAP_FLASHELEMENTCATEGORY(listOf(CATEGORY), listOf()),
+        WORLDMAP_DISABLEELEMENTCATEGORY(listOf(CATEGORY, BOOLEAN), listOf()),
+        WORLDMAP_GETDISABLEELEMENTCATEGORY(listOf(), listOf(BOOLEAN)),
+        WORLDMAP_DISABLEELEMENT(listOf(INT, BOOLEAN), listOf()),
+        WORLDMAP_GETDISABLEELEMENT(listOf(), listOf(BOOLEAN)),
+        WORLDMAP_GETCURRENTMAP(listOf(), listOf(MAPAREA)),
 
         FULLSCREEN_ENTER(listOf(WIDTH, HEIGHT), listOf(BOOLEAN)),
         FULLSCREEN_EXIT(listOf(), listOf()),
@@ -650,8 +716,10 @@ interface Command {
         WRITECONSOLE(listOf(STRING), listOf()),
         FORMATMINIMENU(listOf(COLOUR, TRANS, COLOUR, TRANS, GRAPHIC, GRAPHIC, GRAPHIC, GRAPHIC, GRAPHIC, COLOUR, COLOUR), listOf()),
         DEFAULTMINIMENU(listOf(), listOf()),
-        SETDEFAULTCURSORS(listOf(CURSOR), listOf()),
+        SETDEFAULTCURSORS(listOf(CURSOR, CURSOR), listOf()),
         SETHARDCODEDOPCURSORS(listOf(CURSOR, CURSOR), listOf()),
+        MINIMENUOPEN(listOf(COMPONENT, INT), listOf(BOOLEAN)),
+        DOCHEAT(listOf(STRING), listOf()),
 
         CAM_MOVETO(listOf(_COORD, INT, INT, INT), listOf()),
         CAM_LOOKAT(listOf(_COORD, INT, INT, INT), listOf()),
@@ -660,13 +728,19 @@ interface Command {
         CAM_FORCEANGLE(listOf(INT, INT), listOf()),
         CAM_GETANGLE_XA(listOf(), listOf(INT)),
         CAM_GETANGLE_YA(listOf(), listOf(INT)),
+        CAM_INC_X(listOf(), listOf()),
+        CAM_DEC_X(listOf(), listOf()),
+        CAM_INC_Y(listOf(), listOf()),
+        CAM_DEC_Y(listOf(), listOf()),
+        CAM_FOLLOWCOORD(listOf(_COORD), listOf()),
+        CAM_SMOOTHRESET(listOf(), listOf()),
 
         LOGIN_REQUEST(listOf(STRING, STRING, INT), listOf()),
         LOGIN_CONTINUE(listOf(), listOf()),
         LOGIN_RESETREPLY(listOf(), listOf()),
         _5603(listOf(INT, INT, INT, INT), listOf()),
         _5604(listOf(STRING), listOf()),
-        _5605(listOf(STRING, STRING, INT, INT, INT, INT), listOf()),
+        _5605(listOf(STRING, STRING, INT, INT, INT, INT, STRING, INT, INT, INT), listOf()),
         _5606(listOf(), listOf()),
         LOGIN_REPLY(listOf(), listOf(INT)),
         LOGIN_HOPTIME(listOf(), listOf(INT)),
@@ -693,8 +767,16 @@ interface Command {
         DETAIL_MUSICVOL(listOf(INT), listOf()),
         DETAIL_BGSOUNDVOL(listOf(INT), listOf()),
         _6021(listOf(BOOLEAN), listOf()),
-        DETAIL_PARTICLES(listOf(INT), listOf()),
+        DETAIL_PARTICLES(listOf(INT), listOf(BOOLEAN)),
         DETAIL_ANTIALIASING_DEFAULT(listOf(INT), listOf()),
+        _6025(listOf(INT), listOf()),
+        DETAIL_BLOOM(listOf(BOOLEAN), listOf()),
+        DETAIL_CUSTOMCURSORS(listOf(BOOLEAN), listOf()),
+        DETAIL_IDLEANIMS(listOf(INT), listOf()),
+        DETAIL_GROUNDBLENDING(listOf(BOOLEAN), listOf()),
+        DETAIL_TOOLKIT(listOf(INT), listOf()),
+        DETAIL_TOOLKIT_DEFAULT(listOf(INT), listOf()),
+        DETAIL_CPUUSAGE(listOf(INT), listOf()),
 
         DETAILGET_BRIGHTNESS(listOf(), listOf(INT)),
         _6102(listOf(), listOf(BOOLEAN)),
@@ -717,6 +799,16 @@ interface Command {
         _6121(listOf(), listOf(BOOLEAN)),
         DETAILGET_PARTICLES(listOf(), listOf(INT)),
         DETAILGET_ANTIALIASING_DEFAULT(listOf(), listOf(INT)),
+        DETAILGET_BUILDAREA(listOf(), listOf(INT)),
+        _6126(listOf(), listOf(BOOLEAN)),
+        DETAILGET_BLOOM(listOf(), listOf(INT)),
+        DETAILGET_CUSTOMCURSORS(listOf(), listOf(BOOLEAN)),
+        DETAILGET_IDLEANIMS(listOf(), listOf(INT)),
+        DETAILGET_GROUNDBLENDING(listOf(), listOf(BOOLEAN)),
+        DETAILGET_TOOLKIT(listOf(), listOf(INT)),
+        DETAILGET_TOOLKIT_DEFAULT(listOf(), listOf(INT)),
+        _6133(listOf(), listOf(BOOLEAN)),
+        DETAILGET_CPUUSAGE(listOf(), listOf(INT)),
 
         VIEWPORT_SETFOV(listOf(INT, INT), listOf()),
         VIEWPORT_SETZOOM(listOf(INT, INT), listOf()),
@@ -735,13 +827,20 @@ interface Command {
         VIDEO_ADVERT_HAS_FINISHED(listOf(), listOf(BOOLEAN)),
 
         WORLDLIST_FETCH(listOf(), listOf(BOOLEAN)),
-        WORLDLIST_START(listOf(), listOf(WORLD, FLAGS, STRING, INT, STRING, COUNT)),
-        WORLDLIST_NEXT(listOf(), listOf(WORLD, FLAGS, STRING, INT, STRING, COUNT)),
+        WORLDLIST_START(listOf(), listOf(WORLD, FLAGS, STRING, INT, STRING, COUNT, INT)),
+        WORLDLIST_NEXT(listOf(), listOf(WORLD, FLAGS, STRING, INT, STRING, COUNT, INT)),
         WORLDLIST_SWITCH(listOf(WORLD), listOf(BOOLEAN)),
         _6504(listOf(WORLD), listOf()),
         _6505(listOf(), listOf(WORLD)),
-        WORLDLIST_SPECIFIC(listOf(WORLD), listOf(FLAGS, STRING, INT, STRING, COUNT)),
+        WORLDLIST_SPECIFIC(listOf(WORLD), listOf(FLAGS, STRING, INT, STRING, COUNT, INT)),
         WORLDLIST_SORT(listOf(INT, BOOLEAN, INT, BOOLEAN), listOf()),
+        WORLDLIST_AUTOWORLD(listOf(), listOf()),
+        WORLDLIST_PINGWORLDS(listOf(BOOLEAN), listOf()),
+
+        MEC_TEXT(listOf(MAPELEMENT), listOf(STRING)),
+        MEC_SPRITE(listOf(MAPELEMENT), listOf(GRAPHIC)),
+        MEC_TEXTSIZE(listOf(MAPELEMENT), listOf(INT)),
+        MEC_CATEGORY(listOf(MAPELEMENT), listOf(CATEGORY)),
         ;
 
         override val id = opcodes.getValue(name)
@@ -803,7 +902,7 @@ interface Command {
         CC_SETONDIALOGABORT,
         CC_SETONSUBCHANGE,
         CC_SETONSTOCKTRANSMIT,
-        CC_SETONTRADINGPOSTTRANSMIT,
+        CC_SETONCAMFINISHED,
         CC_SETONRESIZE,
         CC_SETONVARCTRANSMIT,
         CC_SETONVARCSTRTRANSMIT,
@@ -832,7 +931,7 @@ interface Command {
         IF_SETONDIALOGABORT,
         IF_SETONSUBCHANGE,
         IF_SETONSTOCKTRANSMIT,
-        IF_SETONTRADINGPOSTTRANSMIT,
+        IF_SETONCAMFINISHED,
         IF_SETONRESIZE,
         IF_SETONVARCTRANSMIT,
         IF_SETONVARCSTRTRANSMIT,
@@ -908,6 +1007,7 @@ interface Command {
         LC_PARAM(LOC),
         OC_PARAM(OBJ),
         STRUCT_PARAM(STRUCT),
+        MEC_PARAM(MAPELEMENT),
         ;
 
         override val id = opcodes.getValue(name)
