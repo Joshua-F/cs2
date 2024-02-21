@@ -274,3 +274,9 @@
 180352	boolean
 180368	int
 180384	dbrow
+253952	int
+253968	string
+253984	coord
+254000	int
+254016	int
+254032	boolean
