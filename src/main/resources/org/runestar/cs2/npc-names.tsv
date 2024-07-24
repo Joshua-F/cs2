@@ -13248,10 +13248,10 @@
 13502	hill_giant
 13503	hill_giant
 13504	hill_giant
-13505	earth_surge
-13506	water_surge
-13507	fire_surge
-13508	wind_surge
+13505	earth_spell
+13506	water_spell
+13507	fire_spell
+13508	wind_spell
 13509	guardian_of_armadyl
 13510	ivy_sophista
 13511	thaerisk
@@ -13407,3 +13407,4 @@
 13662	durial321
 13663	magic_mark
 13664	ranging_ro
+13665	broav

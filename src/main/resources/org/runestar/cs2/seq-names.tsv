@@ -1923,7 +1923,6 @@
 7847	derwen_walk_f
 7851	justiciar_zachariah_ready
 7852	justiciar_zachariah_walk_f
-7856	earth_surge_ready
 7861	jardric_ready
 7862	jardric_walk_f
 7870	green_dragon_ready
@@ -2641,3 +2640,7 @@
 11433	strange_tube_ready
 11436	strange_tube_ready
 11437	strange_tube_ready
+11456	fire_spell_ready
+11457	wind_spell_ready
+11458	water_spell_ready
+11459	earth_spell_ready

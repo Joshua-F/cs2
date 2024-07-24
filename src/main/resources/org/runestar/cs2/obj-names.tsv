@@ -29166,6 +29166,7 @@
 29590	placeholder_emberlight
 29591	scorching_bow
 29592	placeholder_scorching_bow
+29593	dummy_scorching_bow
 29594	purging_staff
 29595	placeholder_purging_staff
 29596	duradels_notes
@@ -29253,3 +29254,8 @@
 29678	sigil_of_arcane_swiftness
 29679	sigil_of_arcane_swiftness
 29680	cert_sigil_of_arcane_swiftness
+29681	dummy_priest_gown
+29682	dummy_guthixian_temple_teleport
+29683	dummy_guthixian_temple_teleport
+29684	guthixian_temple_teleport
+29685	placeholder_guthixian_temple_teleport
