@@ -4726,10 +4726,10 @@
 7868	woad_plant
 7869	woad_plant
 7870	woad_plant
-7871	herbs
-7872	herbs
-7873	herbs
-7874	herbs
+7871	goutweed
+7872	diseased_herbs
+7873	diseased_herbs
+7874	diseased_herbs
 7875	herbs
 7876	jute
 7877	jute
@@ -6485,7 +6485,7 @@
 10765	climbing_rocks
 10770	doorway
 10771	doorway
-10772	stairs
+10772	herb_patch
 10776	low_wall
 10779	plank
 10784	stairs
