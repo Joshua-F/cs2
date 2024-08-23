@@ -3394,7 +3394,6 @@
 4813	[proc,ca_rewards_tiers_init]
 4816	[clientscript,ca_tasks_init]
 4817	[clientscript,ca_tasks_draw_list]
-4818	[proc,ca_tasks_draw_list]
 4819	[proc,ca_task_display]
 4820	[clientscript,ca_info_hover]
 4821	[clientscript,ca_task_filter_init]

@@ -12116,8 +12116,8 @@
 12358	cert_katana
 12359	leprechaun_hat
 12360	cert_leprechaun_hat
-12361	cat_h
-12362	cert_cat_h
+12361	cat_mask
+12362	cert_cat_mask
 12363	bronze_dragon_mask
 12364	cert_bronze_dragon_mask
 12365	iron_dragon_mask
@@ -15664,7 +15664,7 @@
 15918	placeholder_big_pirate_hat
 15919	placeholder_katana
 15920	placeholder_leprechaun_hat
-15921	placeholder_cat_h
+15921	placeholder_cat_mask
 15922	placeholder_bronze_dragon_mask
 15923	placeholder_iron_dragon_mask
 15924	placeholder_steel_dragon_mask
@@ -29348,6 +29348,6 @@
 29772	dni23_legs_patchedskirt
 29773	placeholder_dni23_legs_patchedskirt
 29774	amys_saw_off_hand
-29775	imcando_hammer_offhand
-29776	placeholder_imcando_hammer_offhand
+29775	imcando_hammer_off_hand
+29776	placeholder_imcando_hammer_off_hand
 29777	bruma_torch_off_hand

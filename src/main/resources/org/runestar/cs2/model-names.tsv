@@ -125,7 +125,7 @@
 147	spirit_tree
 148	spirit_tree
 150	plague_jacket
-151	cat_h
+151	cat_mask
 152	khazard_guard
 155	elemental_shield
 156	dragon_chainbody
@@ -251,7 +251,7 @@
 289	cat_training_medal
 290	amulet_of_accuracy
 291	longhall_bouncer
-292	cat_h
+292	cat_mask
 293	haming
 294	iron_chainbody
 295	plague_jacket
@@ -11888,7 +11888,7 @@
 20132	saradomin_mitre
 20133	sleeping_cap
 20134	3rd_age_range_coif
-20135	cat_h
+20135	cat_mask
 20136	3rd_age_mage_hat
 20137	3rd_age_full_helmet
 20138	3rd_age_platelegs
@@ -16442,7 +16442,7 @@
 28759	deerstalker
 28760	ancient_mitre
 28761	beanie
-28762	cat_h
+28762	cat_mask
 28763	armadyl_mitre
 28764	crier_hat
 28765	top_hat
@@ -16479,7 +16479,7 @@
 28798	royal_crown
 28799	big_pirate_hat
 28800	deerstalker
-28801	cat_h
+28801	cat_mask
 28802	magical_pumpkin
 28805	headless_head
 28807	headless_head
@@ -16640,7 +16640,7 @@
 28973	veracs_armour_set
 28974	dwarf_cannon_set
 28975	amys_saw_off_hand
-28976	imcando_hammer_offhand
+28976	imcando_hammer_off_hand
 28977	antisanta_gloves
 28978	santa_gloves
 28979	santa_pantaloons
@@ -16703,7 +16703,7 @@
 29038	xerics_sentinel
 29039	antisanta_gloves
 29040	xerics_champion
-29041	imcando_hammer_offhand
+29041	imcando_hammer_off_hand
 29042	bruma_torch_off_hand
 29044	desert_amulet_3
 29045	desert_amulet_1
@@ -16864,6 +16864,8 @@
 29238	snow_leopard_toy
 29239	lion_toy
 29240	hellpuppy
+29243	bank_booth
+29244	closed_bank_booth
 29249	eternal_boots
 29250	primordial_boots
 29252	pegasian_boots
