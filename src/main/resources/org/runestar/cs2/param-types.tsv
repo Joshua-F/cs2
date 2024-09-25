@@ -2,6 +2,7 @@
 40	int
 41	int
 42	int
+59	int
 87	enum
 123	int
 142	int
@@ -11,6 +12,7 @@
 151	int
 152	int
 155	int
+181	int
 186	model
 191	stat
 258	int
@@ -30,6 +32,7 @@
 385	int
 393	int
 401	int
+403	int
 434	stat
 435	stat
 436	int
@@ -48,6 +51,7 @@
 461	graphic
 462	int
 465	obj
+468	int
 474	boolean
 506	string
 509	int
@@ -721,3 +725,5 @@
 1937	boolean
 1951	int
 1957	boolean
+1977	int
+1978	int

@@ -261,6 +261,7 @@
 167936	namedobj
 167952	string
 167968	string
+167984	graphic,graphic
 180224	string
 180240	string
 180256	string
@@ -319,3 +320,16 @@
 282656	idkit
 282672	model
 282688	model
+294912	int
+294928	string
+294944	coord
+294960	component
+311296	int
+311312	string
+311328	component
+311344	component
+315392	int
+315408	component
+315424	component
+315440	component
+315456	component
