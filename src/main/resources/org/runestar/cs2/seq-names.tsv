@@ -2242,9 +2242,9 @@
 9095	boar_ready
 9096	boar_walk_f
 9100	protester
-9137	spider_ready
-9138	spider_walk_f
-9139	spider_walk_f
+9137	araxyte_ready
+9138	araxyte_walk_f
+9139	araxyte_walk_f
 9142	verzik_vitur_ready
 9143	verzik_vitur_walk_f
 9146	death
@@ -2644,3 +2644,7 @@
 11457	wind_spell_ready
 11458	water_spell_ready
 11459	earth_spell_ready
+11473	araxxor_ready
+11474	araxxor_walk_f
+11485	araxxor_ready
+11507	egg_ready
