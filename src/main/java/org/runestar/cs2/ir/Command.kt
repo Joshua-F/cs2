@@ -840,8 +840,8 @@ interface Command {
         STRING_INDEXOF_CHAR(listOf(STRING, CHAR), listOf(INDEX)),
         STRING_INDEXOF_STRING(listOf(STRING, STRING, INDEX), listOf(INDEX)),
         UPPERCASE(listOf(STRING), listOf(STRING)),
-        TEXT_GENDER(listOf(STRING, STRING, STRING), listOf(STRING), true),
-        GENDER(listOf(), listOf(INT), true),
+        TEXT_PRONOUN(listOf(STRING, STRING, STRING), listOf(STRING), true),
+        PRONOUN(listOf(), listOf(INT), true),
 
         OC_NAME(listOf(OBJ), listOf(STRING)),
         OC_OP(listOf(OBJ, OPINDEX), listOf(OP)),
