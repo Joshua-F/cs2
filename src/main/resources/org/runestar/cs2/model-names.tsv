@@ -27804,7 +27804,6 @@
 50721	cobado
 50724	baker
 50725	fremennik_warband_seer
-50727	lucas
 50728	guard_captain
 50733	gem_merchant
 50734	leo
@@ -29669,7 +29668,7 @@
 54551	apprentice_potion_pack
 54552	tools
 54553	termites
-54554	pre_pot_device
+54554	chugging_barrel
 54555	frozen_tear
 54556	sails
 54557	tattered_sails
@@ -29863,7 +29862,7 @@
 54997	glacial_temotli
 54998	emissary_conjurer
 54999	emissary_brawler
-55001	pre_pot_device
+55001	chugging_barrel
 55006	vineyard_worker
 55007	emelio
 55008	emissary_brawler
@@ -30137,3 +30136,6 @@
 55303	graceful_top
 55305	trap
 55334	hueycoatl_hide
+55335	portal
+55336	shelves
+55337	shelves

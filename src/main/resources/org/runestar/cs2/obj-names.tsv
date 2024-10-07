@@ -29565,11 +29565,11 @@
 29997	placeholder_reagent_pouch
 29998	open_reagent_pouch
 29999	potion_storage
-30000	pre_pot_device
-30001	placeholder_pre_pot_device
-30002	pre_pot_device_disassembled
-30003	cert_pre_pot_device_disassembled
-30004	placeholder_pre_pot_device_disassembled
+30000	chugging_barrel
+30001	placeholder_chugging_barrel
+30002	chugging_barrel_disassembled
+30003	cert_chugging_barrel_disassembled
+30004	placeholder_chugging_barrel_disassembled
 30005	mox_paste
 30006	placeholder_mox_paste
 30007	aga_paste

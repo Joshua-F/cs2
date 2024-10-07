@@ -28459,8 +28459,8 @@
 54679	skeleton
 54680	skeleton
 54681	skeleton
-54682	icey_water
-54683	icey_water
+54682	icy_water
+54683	icy_water
 54689	gate
 54690	cave
 54691	cave
@@ -28895,3 +28895,10 @@
 55400	nest_multi
 55401	chain_multi
 55402	hopper_controls
+55403	inconspicuous_hole_medium_multi
+55404	inconspicuous_rocks_medium_multi
+55405	inconspicuous_crate_hard_multi
+55406	shelves
+55407	shelves
+55408	shelves
+55409	shelves
