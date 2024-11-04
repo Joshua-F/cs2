@@ -6841,8 +6841,6 @@
 11308	spirit_shield
 11309	spectral_spirit_shield
 11310	arcane_spirit_shield
-11311	grim_reaper_hood
-11312	grim_reaper_hood
 11318	gold_candlesticks
 11319	steel_candlesticks
 11320	torch
@@ -12960,7 +12958,6 @@
 21816	lathe
 21817	smoke
 21818	smoke
-21822	grim_reaper_hood
 21823	grim_reapers_diary
 21824	human_eye
 21825	rogues_revenge
@@ -16652,7 +16649,7 @@
 28982	antisanta_jacket
 28983	santa_jacket
 28984	antisanta_jacket
-28985	grim_reaper_hood
+28985	death
 28988	antisanta_boots
 28989	santa_boots
 28990	granite_maul
@@ -30230,3 +30227,18 @@
 55456	beige_pumpkin_evil
 55457	beige_pumpkin_depressed
 55458	scarecrow_shirt
+55459	grim_reaper_hood
+55460	grim_reaper_hood
+55461	grim_reaper_hood
+55462	grim_reaper_hood
+55463	torva_full_helm
+55464	torva_full_helm
+55465	torva_platelegs
+55466	torva_platebody
+55467	torva_full_helm
+55468	torva_platelegs
+55469	torva_platebody
+55470	torva_full_helm
+55471	torva_platelegs
+55472	torva_platebody
+55476	mural
