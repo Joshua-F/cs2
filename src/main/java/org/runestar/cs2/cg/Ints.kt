@@ -8,6 +8,7 @@ import org.runestar.cs2.CLIENTTYPE_NAMES
 import org.runestar.cs2.DBCOLUMN_NAMES
 import org.runestar.cs2.DBTABLE_NAMES
 import org.runestar.cs2.DEVICEOPTION_NAMES
+import org.runestar.cs2.ENUM_NAMES
 import org.runestar.cs2.FONTMETRICS_NAMES
 import org.runestar.cs2.GAMEOPTION_NAMES
 import org.runestar.cs2.GRAPHIC_NAMES
@@ -118,7 +119,7 @@ private val PROTOTYPES = HashMap<Prototype, Loader<String>>().apply {
     this[NPC_UID] = NULL.orElse(VALUE)
     this[PLAYER_UID] = NULL.orElse(VALUE)
 
-    this[ENUM] = unknown(ENUM)
+    this[ENUM] = unique(ENUM, ENUM_NAMES)
     this[CATEGORY] = unknown(CATEGORY)
     this[MAPELEMENT] = unknown(MAPELEMENT)
 

@@ -3,6 +3,9 @@ package org.runestar.cs2.cg
 import org.runestar.cs2.ir.EventProperty
 import org.runestar.cs2.bin.*
 import org.runestar.cs2.SCRIPT_NAMES
+import org.runestar.cs2.VARP_NAMES
+import org.runestar.cs2.VARBIT_NAMES
+import org.runestar.cs2.VARC_NAMES
 import org.runestar.cs2.bin.StackType
 import org.runestar.cs2.bin.Trigger
 import org.runestar.cs2.cfa.Construct
@@ -246,10 +249,10 @@ private class Writer(
                 }
                 append(v.id)
             }
-            is Variable.varp -> append("var").append(v.id)
-            is Variable.varbit -> append("varbit").append(v.id)
-            is Variable.varcint -> append("varcint").append(v.id)
-            is Variable.varcstring -> append("varcstring").append(v.id)
+            is Variable.varp -> append(VARP_NAMES.load(v.id) ?: "var${v.id}")
+            is Variable.varbit -> append(VARBIT_NAMES.load(v.id) ?: "varbit${v.id}")
+            is Variable.varcint -> append(VARC_NAMES.load(v.id) ?: "varcint${v.id}")
+            is Variable.varcstring -> append(VARC_NAMES.load(v.id) ?: "varcstring${v.id}")
             is Variable.varclansetting -> append("varclansetting").append(v.id)
             is Variable.varclan -> append("varclan").append(v.id)
             else -> error(v)

@@ -36,7 +36,7 @@ val PARAM_TYPES = readPrototype("param-types-override.tsv").orElse(readPrototype
 val BOOLEAN_NAMES = readNames("boolean-names.tsv")
 val FONTMETRICS_NAMES = readNames("fontmetrics-names.tsv")
 val GRAPHIC_NAMES = readNames("graphic-names.tsv")
-val INTERFACE_NAMES = readNames("interface-names.tsv")
+val INTERFACE_NAMES = readNames("interface-names.tsv").orElse(readNames("interface-names-unconfirmed.tsv"))
 val DBTABLE_NAMES = readNames("dbtable-names.tsv")
 val DBCOLUMN_NAMES = readNames("dbcolumn-names.tsv") {
     val split = it.split(",");
@@ -72,6 +72,10 @@ val MINIMENU_ENTRY_TYPE_NAMES = readNames("minimenu-entry-type-names.tsv")
 val DEVICEOPTION_NAMES = readNames("deviceoption-names.tsv")
 val GAMEOPTION_NAMES = readNames("gameoption-names.tsv")
 val SETTING_NAMES = readNames("setting-names.tsv")
+val VARP_NAMES = readNames("varp-names.tsv").orElse(readNames("varp-names-unconfirmed.tsv"))
+val VARC_NAMES = readNames("varc-names.tsv").orElse(readNames("varc-names-unconfirmed.tsv"))
+val VARBIT_NAMES = readNames("varbit-names.tsv").orElse(readNames("varbit-names-unconfirmed.tsv"))
+val ENUM_NAMES = readNames("enum-names.tsv").orElse(readNames("enum-names-unconfirmed.tsv"))
 
 // must be at the bottom since it relies on other type names
 val SCRIPT_NAMES = readLoader("script-names.tsv") { ScriptName(it) }
