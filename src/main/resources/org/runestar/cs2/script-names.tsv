@@ -2825,7 +2825,6 @@
 3985	[proc,settings_hide_private_chat]
 3986	[proc,settings_profanity_filter]
 3990	[proc,settings_mouse_camera]
-3994	[proc,settings_function_button]
 3996	[proc,settings_escape_closes_interface]
 3997	[clientscript,boardgames_runesquares_options_update_rune]
 3998	[clientscript,settings_client_mode]
@@ -4527,3 +4526,8 @@
 7330	[proc,worldswitcher_search_set]
 7371	14022437
 7372	14022693
+7455	[proc,setdeviceoption]
+7556	[proc,orbs_toggle_prayer]
+7557	[proc,orbs_toggle_runmode]
+7558	[proc,orbs_toggle_spec_op]
+7593	[proc,combat_interface_setup]

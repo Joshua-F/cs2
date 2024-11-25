@@ -334,3 +334,14 @@
 315424	component
 315440	component
 315456	component
+319488	int
+319504	int,string,string,graphic
+323584	string
+323600	int
+323616	graphic
+327680	varp
+327696	string
+327712	graphic
+331776	string
+331792	graphic
+331808	varp

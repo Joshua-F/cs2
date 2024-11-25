@@ -53,6 +53,7 @@ val NPC_UID = Prototype(Type.NPC_UID)
 val PLAYER_UID = Prototype(Type.PLAYER_UID)
 val DBROW = Prototype(Type.DBROW)
 val STRINGVECTOR = Prototype(Type.STRINGVECTOR)
+val VARP = Prototype(Type.VARP)
 
 val OPBASE = Prototype(Type.STRING, "opbase")
 val MOUSEX = Prototype(Type.INT, "mousex")

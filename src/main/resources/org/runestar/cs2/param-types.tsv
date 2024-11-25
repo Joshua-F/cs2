@@ -728,3 +728,13 @@
 1977	int
 1978	int
 1982	int
+1986	int
+1987	int
+1988	graphic
+1989	int
+1990	int
+1991	string
+1992	string
+1993	int
+1994	int
+1995	boolean

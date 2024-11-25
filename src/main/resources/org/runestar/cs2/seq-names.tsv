@@ -2521,6 +2521,7 @@
 10744	human_detection_spell
 10745	pedestal
 10746	rubble
+10747	rubble
 10748	fire_trap
 10755	sconce
 10756	blue_block
@@ -2532,6 +2533,8 @@
 10768	crondis_statue
 10770	torch
 10772	torch
+10775	golem_guard_walk_f
+10778	golem_guard_ready
 10788	deadfall
 10789	deadfall
 10790	boulder
@@ -2717,3 +2720,6 @@
 11752	worm_tongue_walk_f
 11753	dire_wolf_alpha_walk_f
 11771	scarecrow
+11780	small_scarab_ready
+11784	small_scarab_walk_f
+11788	tumeken_statue

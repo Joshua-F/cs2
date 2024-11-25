@@ -41,6 +41,7 @@ enum class Type(desc: Char = 0.toChar(), literal: String? = null) {
     STRUCT('J'),
     SYNTH('P'),
     TOPLEVELINTERFACE('F'),
+    VARP('7'),
     TYPE,
     DBTABLE,
     DBCOLUMN,
