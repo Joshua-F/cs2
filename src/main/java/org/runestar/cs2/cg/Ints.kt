@@ -170,7 +170,7 @@ private val PROTOTYPES = HashMap<Prototype, Loader<String>>().apply {
     this[DBCOLUMN] = NULL.orElse(DBCOLUMNS)
 
     this[STRINGVECTOR] = unknown(STRINGVECTOR)
-    this[VARP] = unknown(VARP)
+    this[VARP] = unknown(VARP, separator = "", identifier = "var")
 
     this[SCRIPT] = unknown(SCRIPT, separator = "")
 }
